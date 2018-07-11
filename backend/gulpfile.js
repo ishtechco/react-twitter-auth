@@ -1,6 +1,6 @@
 'use strict';
 
-var gulp = require('gulp'),
+const gulp = require('gulp'),
   eslint = require('gulp-eslint'),
   nodemon = require('gulp-nodemon');
 

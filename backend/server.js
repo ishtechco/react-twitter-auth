@@ -2,7 +2,7 @@
 
 //mongoose file must be loaded before all other files in order to provide
 // models to other modules
-var mongoose = require("./mongoose"),
+const mongoose = require("./mongoose"),
   passport = require("passport"),
   express = require("express"),
   jwt = require("jsonwebtoken"),
@@ -15,16 +15,16 @@ var mongoose = require("./mongoose"),
 
 mongoose();
 
-var User = require("mongoose").model("User");
-var passportConfig = require("./passport");
+const User = require("mongoose").model("User");
+const passportConfig = require("./passport");
 
 //setup configuration for facebook login
 passportConfig();
 
-var app = express();
+const app = express();
 
 // enable cors
-var corsOption = {
+const corsOption = {
   origin: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
@@ -45,7 +45,7 @@ router.route("/health-check").get(function(req, res) {
   res.send("Hello World");
 });
 
-var createToken = function(auth) {
+const createToken = function(auth) {
   return jwt.sign(
     {
       id: auth.id
@@ -57,12 +57,12 @@ var createToken = function(auth) {
   );
 };
 
-var generateToken = function(req, res, next) {
+const generateToken = function(req, res, next) {
   req.token = createToken(req.auth);
   return next();
 };
 
-var sendToken = function(req, res) {
+const sendToken = function(req, res) {
   res.setHeader("x-auth-token", req.token);
   return res.status(200).send(JSON.stringify(req.user));
 };
@@ -82,7 +82,7 @@ router.route("/auth/twitter/reverse").post(function(req, res) {
         return res.send(500, { message: e.message });
       }
 
-      var jsonStr =
+      const jsonStr =
         '{ "' + body.replace(/&/g, '", "').replace(/=/g, '": "') + '"}';
       res.send(JSON.parse(jsonStr));
     }
@@ -136,7 +136,7 @@ router.route("/auth/twitter").post(
 );
 
 //token handling middleware
-var authenticate = expressJwt({
+const authenticate = expressJwt({
   secret: "my-secret",
   requestProperty: "auth",
   getToken: function(req) {
@@ -147,7 +147,7 @@ var authenticate = expressJwt({
   }
 });
 
-var getCurrentUser = function(req, res, next) {
+const getCurrentUser = function(req, res, next) {
   User.findById(req.auth.id, function(err, user) {
     if (err) {
       next(err);
@@ -158,8 +158,8 @@ var getCurrentUser = function(req, res, next) {
   });
 };
 
-var getOne = function(req, res) {
-  var user = req.user.toObject();
+const getOne = function(req, res) {
+  const user = req.user.toObject();
 
   delete user["twitterProvider"];
   delete user["__v"];

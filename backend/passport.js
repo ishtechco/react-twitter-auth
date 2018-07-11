@@ -1,6 +1,6 @@
 'use strict';
 
-var passport = require('passport'),
+const passport = require('passport'),
   TwitterTokenStrategy = require('passport-twitter-token'),
   User = require('mongoose').model('User'),
   twitterConfig = require('./twitter.config.js');

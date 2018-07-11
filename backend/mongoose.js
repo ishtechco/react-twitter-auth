@@ -1,14 +1,14 @@
 "use strict";
 
-var mongoose = require("mongoose"),
+const mongoose = require("mongoose"),
   Schema = mongoose.Schema;
 
 module.exports = function() {
-  var db = mongoose.connect(
+  const db = mongoose.connect(
     "mongodb://admin:Jordy123@ds117431.mlab.com:17431/rm-plus"
   );
 
-  var UserSchema = new Schema({
+  const UserSchema = new Schema({
     email: {
       type: String,
       required: true,
@@ -33,7 +33,7 @@ module.exports = function() {
     profile,
     cb
   ) {
-    var that = this;
+    const that = this;
     return this.findOne(
       {
         "twitterProvider.id": profile.id
@@ -41,7 +41,7 @@ module.exports = function() {
       function(err, user) {
         // no user was found, lets create a new one
         if (!user) {
-          var newUser = new that({
+          const newUser = new that({
             email: profile.emails[0].value,
             twitterProvider: {
               id: profile.id,
